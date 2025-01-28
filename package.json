@@ -17,8 +17,12 @@
   },
   "dependencies": {
     "@mdx-js/react": "^3.1.0",
+    "@primer/octicons-react": "^19.14.0",
+    "@radix-ui/react-slot": "^1.1.1",
     "@tailwindcss/postcss": "^4.0.0",
     "autoprefixer": "^10.4.20",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "gatsby": "^5.14.1",
     "gatsby-plugin-google-gtag": "^5.14.0",
     "gatsby-plugin-image": "^3.14.0",
@@ -29,10 +33,13 @@
     "gatsby-plugin-sitemap": "^6.14.0",
     "gatsby-source-filesystem": "^5.14.0",
     "gatsby-transformer-sharp": "^5.14.0",
+    "lucide-react": "^0.474.0",
     "postcss": "^8.5.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "tailwindcss": "^4.0.0"
+    "tailwind-merge": "^2.6.0",
+    "tailwindcss": "^4.0.0",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@types/node": "^20.11.19",
