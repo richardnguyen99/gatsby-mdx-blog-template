@@ -26,7 +26,7 @@ export const onCreateNode: GatsbyNode["onCreateNode"] = ({
     try {
       createNodeField({
         name: "timeToRead",
-        node
+        node,
         value: readingTime(node.body as string),
       });
     } catch (e) {
