@@ -6,9 +6,11 @@
 
 @plugin "tailwindcss-animate";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @layer base {
   body {
-    @apply bg-slate-950 text-slate-200;
+    @apply bg-background text-foreground;
   }
 
   * {
