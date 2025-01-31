@@ -25,10 +25,14 @@ type ArticleCardProps = {
 
 const ArticleCard: React.FC<
   ArticleCardProps & React.HTMLAttributes<HTMLDivElement>
-> = ({ frontmatter, fields, id, ...rest }) => {
+> = ({ frontmatter, fields, id, className, ...rest }) => {
   return (
     <article
-      className="bg-background hover:bg-accent border border-border rounded-lg shadow-md overflow-hidden flex flex-col h-full transition-colors pointer-events-auto cursor-default"
+      id={id}
+      className={cn(
+        "bg-background hover:bg-accent border border-border rounded-lg shadow-md overflow-hidden flex flex-col h-full transition-colors pointer-events-auto cursor-default",
+        className
+      )}
       {...rest}
     >
       <Image
