@@ -1,5 +1,6 @@
 import { GatsbyNode } from "gatsby";
 import * as path from "path";
+import readingTime from "reading-time";
 
 export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] = ({
   actions,
@@ -14,13 +15,37 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] = ({
   });
 };
 
+export const onCreateNode: GatsbyNode["onCreateNode"] = ({
+  node,
+  actions,
+  reporter,
+}) => {
+  const { createNodeField } = actions;
+
+  if (node.internal.type === "Mdx") {
+    try {
+      createNodeField({
+        name: "timeToRead",
+        node
+        value: readingTime(node.body as string),
+      });
+    } catch (e) {
+      reporter.panicOnBuild(
+        "Error creating node field (Node ID: " +
+          node.id +
+          "):\n" +
+          (e as Error).message
+      );
+    }
+  }
+};
+
 export const createPages: GatsbyNode["createPages"] = async ({
   graphql,
   actions,
   reporter,
 }) => {
   const { createPage } = actions;
-
 
   const result = await graphql<{
     allMdx: {
@@ -34,7 +59,8 @@ export const createPages: GatsbyNode["createPages"] = async ({
         };
       }[];
     };
-  }>(`#graphql
+  }>(`
+    #graphql
     query MdxNode {
       allMdx {
         nodes {
@@ -71,6 +97,6 @@ export const createPages: GatsbyNode["createPages"] = async ({
       context: {
         id: post.id,
       },
-    })
+    });
   });
 };
