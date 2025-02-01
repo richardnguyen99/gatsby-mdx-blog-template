@@ -1,14 +1,32 @@
 import React from "react";
-import { graphql, PageProps } from "gatsby";
+import { GetServerData, graphql, PageProps } from "gatsby";
 
-import { FilterDropdown } from "./filter-dropdown";
-import { SortDropdown } from "./sort-dropdown";
+import { FilterDropdown } from "@/features/blog/filter-dropdown";
+import { SortDropdown } from "@/features/blog/sort-dropdown";
 import ArticleCard from "@/components/article-card";
 
-type Props = PageProps<Queries.BlogPageQuery>;
+type ServerDataType = {
+  filter?: string;
+  sort?: string;
+};
+
+type Props = PageProps<Queries.BlogPageQuery, object, unknown, ServerDataType>;
+
+const filterPost = (category?: string) => {
+  return (post: Queries.BlogPageQuery["allMdx"]["nodes"][number]) => {
+    if (!category) {
+      return true;
+    }
+
+    return post.frontmatter?.category === category;
+  };
+};
 
 export default function Blog(props: Props) {
-  const { data } = props;
+  const { data, serverData } = props;
+  const { filter } = serverData;
+
+  const posts = data.allMdx.nodes.filter(filterPost(filter));
 
   return (
     <div className="min-h-screen max-w-3xl mx-auto pr-4 pl-8 mt-8">
@@ -27,22 +45,40 @@ export default function Blog(props: Props) {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {data.allMdx.nodes.slice(0, 6).map((node) => {
-            const {fields, id, frontmatter} = node;
+          {posts.slice(0, 6).map((node) => {
+            const { fields, id, frontmatter } = node;
 
             return (
-              <ArticleCard key={id} 
+              <ArticleCard
+                key={id}
                 frontmatter={frontmatter}
                 fields={fields}
                 id={id}
               />
-            )
+            );
           })}
         </div>
       </main>
     </div>
   );
 }
+
+export const getServerData: GetServerData<ServerDataType> = async (context) => {
+  const { query } = context;
+
+  const queryObj = query as Record<string, string>;
+  const filter = queryObj["f"] || undefined;
+  const sort = queryObj["s"] || undefined;
+
+  return {
+    status: 200, // The HTTP status code that should be returned
+    props: {
+      filter,
+      sort,
+    }, // Will be passed to the page component as "serverData" prop
+    headers: {}, // HTTP response headers for this page
+  };
+};
 
 export const query = graphql`
   query BlogPage {
@@ -69,7 +105,11 @@ export const query = graphql`
 
           thumbnail {
             childImageSharp {
-              gatsbyImageData(layout: CONSTRAINED, quality: 100)
+              gatsbyImageData(
+                layout: CONSTRAINED
+                quality: 100
+                placeholder: BLURRED
+              )
             }
           }
         }

@@ -10,6 +10,7 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] = ({
       alias: {
         "@/components": path.resolve(__dirname, "src", "components"),
         "@/lib": path.resolve(__dirname, "src", "lib"),
+        "@/features": path.resolve(__dirname, "src", "features"),
       },
     },
   });
