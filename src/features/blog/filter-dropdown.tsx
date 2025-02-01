@@ -1,21 +1,35 @@
-import React from "react";
-import { DropdownMenuArrow } from "@radix-ui/react-dropdown-menu";
+import React, { useCallback } from "react";
+import {
+  DropdownMenuArrow,
+} from "@radix-ui/react-dropdown-menu";
 
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-type Props = {};
+type Props = {
+  currentFilter?: string;
+  items: {
+    id: string;
+    label: string;
+    value: string;
+  }[];
+};
 
 export function FilterDropdown(props: Props) {
-  const {} = props;
+  const { items, currentFilter } = props;
+  const [filter, setFilter] = React.useState(currentFilter);
+
+  const handleChange = useCallback((value: string) => {
+    setFilter(value);
+  }, []);
 
   return (
     <DropdownMenu>
@@ -26,17 +40,17 @@ export function FilterDropdown(props: Props) {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" side="bottom" align="end">
         <DropdownMenuLabel>Filter on category</DropdownMenuLabel>
+
         <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem>Profile</DropdownMenuItem>
-          <DropdownMenuItem>Billing</DropdownMenuItem>
-          <DropdownMenuItem>Settings</DropdownMenuItem>
-          <DropdownMenuItem>Keyboard shortcuts</DropdownMenuItem>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>GitHub</DropdownMenuItem>
-        <DropdownMenuItem>Support</DropdownMenuItem>
-        
+
+        <DropdownMenuRadioGroup value={filter} onValueChange={handleChange}>
+          {items.map(({ id, label, value }) => (
+            <DropdownMenuRadioItem key={id} value={value}>
+              {label}
+            </DropdownMenuRadioItem>
+          ))}
+        </DropdownMenuRadioGroup>
+
         <DropdownMenuArrow className="dropdown-arrow" width="16" height="8" />
       </DropdownMenuContent>
     </DropdownMenu>

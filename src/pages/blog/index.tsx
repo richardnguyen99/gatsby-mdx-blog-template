@@ -27,6 +27,12 @@ export default function Blog(props: Props) {
   const { filter } = serverData;
 
   const posts = data.allMdx.nodes.filter(filterPost(filter));
+  const categories = data.allCategory.nodes;
+  const categoryItems = categories.map(({ id, name, count }) => ({
+    id: id,
+    value: name,
+    label: `${name} (${count})`,
+  }));
 
   return (
     <div className="min-h-screen max-w-3xl mx-auto pr-4 pl-8 mt-8">
@@ -38,7 +44,7 @@ export default function Blog(props: Props) {
             <h3>All posts</h3>
 
             <div className="flex items-center gap-2">
-              <FilterDropdown />
+              <FilterDropdown currentFilter={filter} items={categoryItems} />
               <SortDropdown />
             </div>
           </div>
@@ -82,6 +88,14 @@ export const getServerData: GetServerData<ServerDataType> = async (context) => {
 
 export const query = graphql`
   query BlogPage {
+    allCategory {
+      nodes {
+        id
+        name
+        count
+      }
+    }
+
     allMdx {
       nodes {
         id

@@ -16,14 +16,57 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] = ({
   });
 };
 
-export const onCreateNode: GatsbyNode["onCreateNode"] = ({
+export const sourceNodes: GatsbyNode["sourceNodes"] = async ({ actions, createContentDigest, createNodeId, getNodes }) => {
+};
+
+export const onCreateNode: GatsbyNode["onCreateNode"] = async ({
   node,
   actions,
   reporter,
+  getNode,
+  createNodeId,
+  createContentDigest,
 }) => {
-  const { createNodeField } = actions;
+  const { createNodeField, createNode, deleteNode } = actions;
 
   if (node.internal.type === "Mdx") {
+    const frontmatter = node.frontmatter as Record<string, string>;
+    const { category } = frontmatter;
+
+    const nodeId = createNodeId(`${category} >>> Category`);
+    const categoryNode = getNode(nodeId);
+
+    if (!categoryNode) {
+      const newCategoryNode = {
+        id: createNodeId(`${category} >>> Category`),
+        name: category,
+        count: 1,
+        parent: null,
+        children: [],
+        internal: {
+          type: "Category",
+          contentDigest: createContentDigest({ category }),
+        },
+      }
+
+      createNode(newCategoryNode);
+    } else {
+      const newCategoryNode = {
+        id: createNodeId(`${category} >>> Category`),
+        name: category,
+        count: (categoryNode.count as number) + 1,
+        parent: null,
+        children: [],
+        internal: {
+          type: "Category",
+          contentDigest: createContentDigest({ category }),
+        },
+      }
+
+      deleteNode(categoryNode);
+      createNode(newCategoryNode);
+    }
+
     try {
       createNodeField({
         name: "timeToRead",
@@ -40,6 +83,20 @@ export const onCreateNode: GatsbyNode["onCreateNode"] = ({
     }
   }
 };
+
+export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] =
+  ({ actions }) => {
+    const { createTypes } = actions;
+    const typeDefs = `#graphql
+    type Category implements Node {
+      id: ID!
+      name: String!
+      count: Int!
+    }
+  `;
+
+    createTypes(typeDefs);
+  };
 
 export const createPages: GatsbyNode["createPages"] = async ({
   graphql,
