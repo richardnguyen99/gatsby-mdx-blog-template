@@ -14,7 +14,7 @@ type Props = PageProps<Queries.BlogPageQuery, object, unknown, ServerDataType>;
 
 const filterPost = (category?: string) => {
   return (post: Queries.BlogPageQuery["allMdx"]["nodes"][number]) => {
-    if (!category) {
+    if (!category || category === "all") {
       return true;
     }
 
@@ -34,6 +34,12 @@ export default function Blog(props: Props) {
     label: `${name} (${count})`,
   }));
 
+  categoryItems.unshift({
+    id: "all",
+    value: "all",
+    label: `All (${data.allMdx.nodes.length})`,
+  })
+
   return (
     <div className="min-h-screen max-w-3xl mx-auto pr-4 pl-8 mt-8">
       <main className="flex flex-col row-start-2 items-center sm:items-start">
@@ -41,10 +47,10 @@ export default function Blog(props: Props) {
           <h1 className="text-4xl font-bold">Blog</h1>
 
           <div className="flex items-center justify-between mt-8 pb-4 mb-4 border-b">
-            <h3>All posts</h3>
+            <h3>All posts <span className="text-muted">({posts.length} total)</span></h3>
 
             <div className="flex items-center gap-2">
-              <FilterDropdown currentFilter={filter} items={categoryItems} />
+              <FilterDropdown currentFilter={filter || "all"} items={categoryItems} />
               <SortDropdown />
             </div>
           </div>

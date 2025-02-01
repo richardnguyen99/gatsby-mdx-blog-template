@@ -1,7 +1,6 @@
 import React, { useCallback } from "react";
-import {
-  DropdownMenuArrow,
-} from "@radix-ui/react-dropdown-menu";
+import { navigate } from "gatsby";
+import { DropdownMenuArrow } from "@radix-ui/react-dropdown-menu";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -25,10 +24,18 @@ type Props = {
 
 export function FilterDropdown(props: Props) {
   const { items, currentFilter } = props;
-  const [filter, setFilter] = React.useState(currentFilter);
 
   const handleChange = useCallback((value: string) => {
-    setFilter(value);
+    if (value === "all") {
+      navigate(`/blog`, {
+        replace: false,
+      });
+      return;
+    }
+
+    navigate(`?f=${encodeURIComponent(value)}`, {
+      replace: false,
+    });
   }, []);
 
   return (
@@ -43,7 +50,7 @@ export function FilterDropdown(props: Props) {
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuRadioGroup value={filter} onValueChange={handleChange}>
+        <DropdownMenuRadioGroup value={currentFilter} onValueChange={handleChange}>
           {items.map(({ id, label, value }) => (
             <DropdownMenuRadioItem key={id} value={value}>
               {label}
