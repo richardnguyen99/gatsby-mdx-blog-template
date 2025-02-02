@@ -41,7 +41,7 @@ const ArticleCard: React.FC<
             ?.gatsbyImageData as GatsbyImageProps["image"]
         }
         alt={frontmatter?.title ?? "Thumbnail"}
-        className="w-full h-40 object-cover"
+        className="w-full h-60 sm:h-40 sm:object-cover"
       />
 
       <div className="p-4 flex flex-col flex-grow">

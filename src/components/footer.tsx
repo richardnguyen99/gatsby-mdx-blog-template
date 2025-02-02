@@ -2,7 +2,7 @@
 import React from "react";
 
 const Footer: React.FC = () => (
-  <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
+  <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center my-8">
     <a
       className="flex items-center gap-2 hover:underline hover:underline-offset-4"
       href="#"
