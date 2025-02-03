@@ -16,9 +16,6 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] = ({
   });
 };
 
-export const sourceNodes: GatsbyNode["sourceNodes"] = async ({ actions, createContentDigest, createNodeId, getNodes }) => {
-};
-
 export const onCreateNode: GatsbyNode["onCreateNode"] = async ({
   node,
   actions,
@@ -41,7 +38,7 @@ export const onCreateNode: GatsbyNode["onCreateNode"] = async ({
         id: createNodeId(`${category} >>> Category`),
         name: category,
         count: 1,
-        parent: null,
+        parent: node.id,
         children: [],
         internal: {
           type: "Category",
@@ -55,7 +52,7 @@ export const onCreateNode: GatsbyNode["onCreateNode"] = async ({
         id: createNodeId(`${category} >>> Category`),
         name: category,
         count: (categoryNode.count as number) + 1,
-        parent: null,
+        parent: node.id,
         children: [],
         internal: {
           type: "Category",
