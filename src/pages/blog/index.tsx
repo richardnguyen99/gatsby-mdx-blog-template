@@ -50,6 +50,16 @@ export default function Blog(props: Props) {
                                          : (page > totalPages) ? totalPages 
                                                                : page;
 
+  const searchParams = new URLSearchParams();
+
+  if (filter && filter !== "all") {
+    searchParams.set("filter", filter);
+  }
+
+  if (pageNumber > 1) {
+    searchParams.set("page", pageNumber.toString());
+  }
+
   return (
     <div className="min-h-screen max-w-3xl mx-auto px-8 mt-8">
       <main className="flex flex-col row-start-2 items-center sm:items-start">
@@ -96,6 +106,7 @@ export default function Blog(props: Props) {
           className="mt-8"
           currentPage={pageNumber}
           totalPages={totalPages}
+          searchParams={searchParams}
           rootUrl="/blog"
         />
       </main>
