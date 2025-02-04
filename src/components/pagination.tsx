@@ -23,22 +23,20 @@ export function Pagination({
   totalPages,
   rootUrl,
   className,
-  searchParams,
+  searchParams: currentSearchParams,
   queryName = "page",
   ...rest
 }: React.ComponentProps<"nav"> & Props) {
-  const pageUrl = (pageNumber: number) => {
-    if (searchParams) {
-      if (searchParams.has(queryName)) {
-        searchParams.delete(queryName);
-      }
 
-      searchParams.set(queryName, pageNumber.toString());
-      
-      return `${rootUrl}?${searchParams}`;
+  const pageUrl = (pageNumber: number) => {
+    const searchParams = new URLSearchParams(currentSearchParams);
+    if (searchParams.has(queryName)) {
+      searchParams.delete(queryName);
     }
 
-    return `${rootUrl}?${queryName}=${pageNumber}`;
+    searchParams.set(queryName, pageNumber.toString());
+
+    return `${rootUrl}?${searchParams}`;
   };
 
   return (
@@ -48,17 +46,12 @@ export function Pagination({
           {currentPage === 1 ? (
             <PaginationPrevious to={pageUrl(1)} aria-disabled />
           ) : (
-            <PaginationPrevious
-              to={pageUrl(currentPage - 1)}
-            />
+            <PaginationPrevious to={pageUrl(currentPage - 1)} />
           )}
         </PaginationItem>
 
         <PaginationItem>
-          <PaginationLink
-            to={pageUrl(1)}
-            isActive={currentPage === 1}
-          >
+          <PaginationLink to={pageUrl(1)} isActive={currentPage === 1}>
             1
           </PaginationLink>
         </PaginationItem>
@@ -68,10 +61,7 @@ export function Pagination({
         {Array.from({ length: 3 }, (_, i) => i + currentPage - 1).map((i) =>
           i > 1 && i < totalPages ? (
             <PaginationItem key={i}>
-              <PaginationLink
-                to={pageUrl(i)}
-                isActive={currentPage === i}
-              >
+              <PaginationLink to={pageUrl(i)} isActive={currentPage === i}>
                 {i}
               </PaginationLink>
             </PaginationItem>

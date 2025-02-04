@@ -33,7 +33,10 @@ export function FilterDropdown(props: Props) {
       return;
     }
 
-    navigate(`?filter=${encodeURIComponent(value)}`, {
+    const searchParams = new URLSearchParams();
+    searchParams.set("filter", value);
+
+    navigate(`?${searchParams}`, {
       replace: false,
     });
   }, []);

@@ -28,7 +28,7 @@ const filterPost = (category?: string) => {
 
 export default function Blog(props: Props) {
   const { data, serverData } = props;
-  const { filter, page = 1 } = serverData;
+  const { filter, page, sort } = serverData;
 
   const posts = data.allMdx.nodes.filter(filterPost(filter));
   const categories = data.allCategory.nodes;
@@ -46,7 +46,7 @@ export default function Blog(props: Props) {
 
   const totalPages = Math.ceil(posts.length / POSTS_PER_PAGE);
   // prettier-ignore
-  const pageNumber = (page < 1) ? 1 
+  const pageNumber = (!page || page < 1) ? 1 
                                          : (page > totalPages) ? totalPages 
                                                                : page;
 
@@ -56,7 +56,11 @@ export default function Blog(props: Props) {
     searchParams.set("filter", filter);
   }
 
-  if (pageNumber > 1) {
+  if (sort) {
+    searchParams.set("sort", sort);
+  }
+
+  if (page) {
     searchParams.set("page", pageNumber.toString());
   }
 
@@ -77,7 +81,10 @@ export default function Blog(props: Props) {
                 currentFilter={filter || "all"}
                 items={categoryItems}
               />
-              <SortDropdown />
+              <SortDropdown
+                currentSort={sort || "date"}
+                currentSearchParams={searchParams}
+              />
             </div>
           </div>
         </div>
@@ -123,13 +130,14 @@ export const getServerData: GetServerData<ServerDataType> = async (context) => {
   const pageStr = queryObj["page"] || undefined;
 
   const page = parseInt(pageStr || "1", 10);
+  const safePage= isNaN(page) ? 1 : page;
 
   return {
     status: 200, // The HTTP status code that should be returned
     props: {
       filter,
       sort,
-      page,
+      page: pageStr ? safePage : undefined,
     }, // Will be passed to the page component as "serverData" prop
     headers: {}, // HTTP response headers for this page
   };
