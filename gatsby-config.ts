@@ -2,8 +2,8 @@ import type { GatsbyConfig } from "gatsby";
 
 const config: GatsbyConfig = {
   siteMetadata: {
-    title: `gatsby-mdx-blog-template`,
-    siteUrl: `https://www.yourdomain.tld`,
+    title: `Home | Gatsby MDX Blog Starter`,
+    siteUrl: `https://gatsby-mdx-blog-starter.netlify.app/`,
     description: `A Gatsby blog template using MDX`,
     xUsername: `@RichardNgu65749`,
   },
