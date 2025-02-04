@@ -16,8 +16,10 @@ type ServerDataType = {
 
 type Props = PageProps<Queries.BlogPageQuery, object, unknown, ServerDataType>;
 
+type Post = Queries.BlogPageQuery["allMdx"]["nodes"][number];
+
 const filterPost = (category?: string) => {
-  return (post: Queries.BlogPageQuery["allMdx"]["nodes"][number]) => {
+  return (post: Post) => {
     if (!category || category === "all") {
       return true;
     }
@@ -26,11 +28,32 @@ const filterPost = (category?: string) => {
   };
 };
 
+const sortStrategies: Record<string, (a: Post, b: Post) => number> = {
+  date: (a, b) => {
+    return (
+      new Date(b.frontmatter?.date || 0).getTime() -
+      new Date(a.frontmatter?.date || 0).getTime()
+    );
+  },
+
+  timeToRead: (a, b) => {
+    return (
+      (a.fields?.timeToRead?.time || 0) - (b.fields?.timeToRead?.time || 0)
+    );
+  },
+};
+
+const sortPost = (sortBy: string) => {
+  return (a: Post, b: Post) => sortStrategies[sortBy]?.(a, b) || 0;
+};
+
 export default function Blog(props: Props) {
   const { data, serverData } = props;
   const { filter, page, sort } = serverData;
 
-  const posts = data.allMdx.nodes.filter(filterPost(filter));
+  const posts = data.allMdx.nodes
+    .filter(filterPost(filter))
+    .sort(sortPost(sort || "date"));
   const categories = data.allCategory.nodes;
   const categoryItems = categories.map(({ id, name, count }) => ({
     id: id,
@@ -130,7 +153,7 @@ export const getServerData: GetServerData<ServerDataType> = async (context) => {
   const pageStr = queryObj["page"] || undefined;
 
   const page = parseInt(pageStr || "1", 10);
-  const safePage= isNaN(page) ? 1 : page;
+  const safePage = isNaN(page) ? 1 : page;
 
   return {
     status: 200, // The HTTP status code that should be returned
@@ -160,13 +183,14 @@ export const query = graphql`
         fields {
           timeToRead {
             text
+            time
           }
         }
 
         frontmatter {
           slug
           title
-          date(formatString: "MMM Do, YYYY")
+          date
           author
           description
           tags
