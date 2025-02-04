@@ -1,7 +1,7 @@
 [build]
     base = "/"
     publish = "public"
-    command = "npm install --platform=linux --arch=x64 sharp && npm run build"
+    command = "npm run clean && npm install --ignore-scripts=false --foreground-scripts --verbose --platform=linux --arch=x64 sharp && npm run build"
     environment = { NODE_VERSION = "20.11.0" }
 
 [functions]
