@@ -7,8 +7,6 @@
   Gatsby Minimal TypeScript Starter
 </h1>
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/b29c35cf-919e-4fa3-b1ca-9b42f0243940/deploy-status)](https://app.netlify.com/sites/gatsby-mdx-blog-starter/deploys)
-
 ## 🚀 Quick start
 
 1. **Create a Gatsby site.**
