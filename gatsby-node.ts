@@ -11,6 +11,7 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] = ({
         "@/components": path.resolve(__dirname, "src", "components"),
         "@/lib": path.resolve(__dirname, "src", "lib"),
         "@/features": path.resolve(__dirname, "src", "features"),
+        "@/hooks": path.resolve(__dirname, "src", "hooks"),
       },
     },
   });
@@ -90,7 +91,21 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       name: String!
       count: Int!
     }
+
+    type Site { 
+      siteMetadata: SiteMetadata!
+    }
+
+    type SiteMetadata {
+      title: String!
+      description: String!
+      xUsername: String!
+      siteUrl: String!
+      image: String!
+    }
   `;
+
+
 
     createTypes(typeDefs);
   };

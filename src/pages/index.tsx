@@ -1,6 +1,7 @@
 import * as React from "react";
 import { graphql, type HeadFC, type PageProps } from "gatsby";
 import { GatsbyImage } from "gatsby-plugin-image";
+import SEO from "@/components/seo";
 
 const IndexPage: React.FC<PageProps<Queries.HomePageQueryQuery>> = ({
   data,
@@ -27,7 +28,7 @@ const IndexPage: React.FC<PageProps<Queries.HomePageQueryQuery>> = ({
 
 export default IndexPage;
 
-export const Head: HeadFC = () => <title>Home Page</title>;
+export const Head: HeadFC = () => <SEO />;
 
 export const pageQuery = graphql`
   query HomePageQuery {
