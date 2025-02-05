@@ -8,3 +8,6 @@
     node_bundler = "esbuild"
     external_node_modules = ["sharp"]
     included_files = ["node_modules/sharp/**/*", "node_modules/@img/**/*"]
+
+[[plugins]]
+    package = "@netlify/plugin-gatsby"
