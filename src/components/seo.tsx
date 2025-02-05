@@ -5,7 +5,7 @@ import { useSiteMetadata } from "@/hooks/use-site-metadata";
 type Props = Partial<
   NonNullable<Queries.SiteMetadataQuery["site"]>["siteMetadata"]
 > & {
-  jsonLd?: Record<string, unknown>;
+  children?: React.ReactNode | React.ReactNode[];
 };
 
 const SEO: React.FC<Props> = ({
@@ -14,7 +14,7 @@ const SEO: React.FC<Props> = ({
   image,
   siteUrl,
   xUsername,
-  jsonLd,
+  children,
 }) => {
   const siteMetadata = useSiteMetadata();
 
@@ -36,7 +36,7 @@ const SEO: React.FC<Props> = ({
 
   return (
     <>
-      <title>{siteMetadata?.title}</title>
+      <title>{seo.title}</title>
       <meta name="description" content={description} />
       <meta name="image" content={seo.image} />
       <meta name="twitter:card" content="summary_large_image" />
@@ -50,10 +50,8 @@ const SEO: React.FC<Props> = ({
       <meta property="og:site_name" content={seo.title} />
       <meta property="og:url" content={seo.siteUrl} />
       <meta property="og:image" content={seo.image} />
-      
-      {jsonLd && (
-        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
-      )}
+
+      {children} 
     </>
   );
 };

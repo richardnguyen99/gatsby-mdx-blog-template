@@ -1,6 +1,7 @@
 import React from "react";
 import { MDXProvider } from "@mdx-js/react";
-import { graphql } from "gatsby";
+import { graphql, HeadFC } from "gatsby";
+import SEO from "@/components/seo";
 
 const shortCodes = {};
 
@@ -72,3 +73,35 @@ export const query = graphql`
     }
   }
 `;
+
+export const Head: HeadFC<Queries.PostLayoutQuery> = ({ data }) => {
+  const { mdx }  = data;
+
+  return <SEO
+    key={`${mdx?.frontmatter?.slug}`}
+    title={`${mdx?.frontmatter?.title} | Gatsby MDX Blog Starter`}
+    description={`${mdx?.frontmatter?.description}`}
+  >
+    <script type="application/ld+json">
+      {
+        `
+        {
+          "@context": "https://schema.org",
+          "@type": "NewsArticle",
+          "headline": "${mdx?.frontmatter?.title}",
+          "image": [
+            "${mdx?.frontmatter?.thumbnail?.childImageSharp?.gatsbyImageData.images.fallback?.src}"
+          ],
+          "datePublished": "${new Date(mdx?.frontmatter?.publishedAt || 0).toISOString()}",
+          "dateModified":  "${new Date(mdx?.frontmatter?.date || 0).toISOString()}",
+          "author": ${JSON.stringify([{
+            "@type": "Person",
+            "name": mdx?.frontmatter?.author,
+            "url": "https://x.com/RichardNgu65749"
+          }])}
+        }
+        `
+      }
+    </script>
+  </SEO>
+};

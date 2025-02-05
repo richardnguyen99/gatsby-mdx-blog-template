@@ -1,10 +1,11 @@
 import React from "react";
-import { GetServerData, graphql, PageProps } from "gatsby";
+import { GetServerData, graphql, HeadFC, PageProps } from "gatsby";
 
 import { FilterDropdown } from "@/features/blog/filter-dropdown";
 import { SortDropdown } from "@/features/blog/sort-dropdown";
 import ArticleCard from "@/components/article-card";
 import Pagination from "@/components/pagination";
+import SEO from "@/components/seo";
 
 const POSTS_PER_PAGE = 6;
 
@@ -143,6 +144,12 @@ export default function Blog(props: Props) {
     </div>
   );
 }
+
+export const Head: HeadFC = () => <SEO
+  title="Blog | Gatsby MDX Blog Starter"
+  description="Blog Page of Gatsby MDX Blog Starter"
+/>;
+
 
 export const getServerData: GetServerData<ServerDataType> = async (context) => {
   const { query } = context;

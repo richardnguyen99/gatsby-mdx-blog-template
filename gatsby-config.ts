@@ -1,6 +1,9 @@
 import type { GatsbyConfig } from "gatsby";
 
 const config: GatsbyConfig = {
+  flags: {
+    DEV_SSR: true,
+  },
   siteMetadata: {
     title: `Home | Gatsby MDX Blog Starter`,
     siteUrl: `https://gatsby-mdx-blog-starter.netlify.app/`,
