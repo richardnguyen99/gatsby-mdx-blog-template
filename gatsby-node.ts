@@ -96,12 +96,20 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       siteMetadata: SiteMetadata!
     }
 
+    type OGImage {
+      src: String!
+      width: Int!
+      height: Int!
+      alt: String!
+    }
+
     type SiteMetadata {
       title: String!
+      titleTemplate: String!
       description: String!
       xUsername: String!
       siteUrl: String!
-      image: String!
+      image: OGImage!
     }
   `;
 

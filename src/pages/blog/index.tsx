@@ -145,11 +145,14 @@ export default function Blog(props: Props) {
   );
 }
 
-export const Head: HeadFC = () => <SEO
-  title="Blog | Gatsby MDX Blog Starter"
-  description="Blog Page of Gatsby MDX Blog Starter"
-/>;
-
+export const Head: HeadFC = () => (
+  <SEO
+    key="Blog"
+    title="Blog"
+    description="Blog Page of Gatsby MDX Blog Starter"
+    keywords={["gatsby", "mdx", "typescript", "blog", "template"]}
+  />
+);
 
 export const getServerData: GetServerData<ServerDataType> = async (context) => {
   const { query } = context;

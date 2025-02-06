@@ -79,8 +79,9 @@ export const Head: HeadFC<Queries.PostLayoutQuery> = ({ data }) => {
 
   return <SEO
     key={`${mdx?.frontmatter?.slug}`}
-    title={`${mdx?.frontmatter?.title} | Gatsby MDX Blog Starter`}
+    title={`${mdx?.frontmatter?.title}`}
     description={`${mdx?.frontmatter?.description}`}
+    keywords={mdx?.frontmatter?.tags as string[]}
   >
     <script type="application/ld+json">
       {

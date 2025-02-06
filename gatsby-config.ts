@@ -5,11 +5,17 @@ const config: GatsbyConfig = {
     DEV_SSR: true,
   },
   siteMetadata: {
-    title: `Home | Gatsby MDX Blog Starter`,
+    title: `Home`,
+    titleTemplate: `Gatsby MDX Blog Starter`,
     siteUrl: `https://gatsby-mdx-blog-starter.netlify.app/`,
     description: `A Gatsby blog template using MDX`,
     xUsername: `@RichardNgu65749`,
-    image: `/icon.png`
+    image: {
+      src: `/og-image.png`,
+      width: 1600,
+      height: 836,
+      alt: `OG Gatsby MDX Blog Starter Image`,
+    }
   },
   // More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense.
   // If you use VSCode you can also use the GraphQL plugin

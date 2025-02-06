@@ -28,7 +28,10 @@ const IndexPage: React.FC<PageProps<Queries.HomePageQueryQuery>> = ({
 
 export default IndexPage;
 
-export const Head: HeadFC = () => <SEO />;
+export const Head: HeadFC = () => <SEO
+  key="Homepage"
+  keywords={["gatsby", "mdx", "typescript", "blog", "template"]}
+/>;
 
 export const pageQuery = graphql`
   query HomePageQuery {
