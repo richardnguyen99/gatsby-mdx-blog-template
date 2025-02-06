@@ -44,9 +44,9 @@ const SEO: React.FC<Props> = ({
 
   return (
     <>
-      <title>{`${seo.title} | ${titleTemplate}`}</title>
+      <title key={`${seo.title}`}>{`${seo.title} | ${titleTemplate}`}</title>
       <meta name="description" content={description} />
-      <meta name="image" content={`${seo.image.src}`} />
+      <meta name="image" content={`${seo.siteUrl}${seo.image.src}`} />
       <meta name="keywords" content={keywords.join(",")} />
 
       <meta name="twitter:card" content="summary_large_image" />
