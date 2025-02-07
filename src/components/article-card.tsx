@@ -9,7 +9,7 @@ type ArticleCardProps = {
   frontmatter:
     | (Omit<Queries.MdxFrontmatter, "thumbnail"> & {
         thumbnail: {
-            gatsbyImageData: GatsbyImageProps["image"];
+            gatsbyImageData: GatsbyImageProps["image"] | null;
         } | null;
       })
     | null;

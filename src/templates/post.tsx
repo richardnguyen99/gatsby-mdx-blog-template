@@ -89,7 +89,7 @@ export const Head: HeadFC<Queries.PostLayoutQuery> = ({ data }) => {
           "@type": "NewsArticle",
           "headline": "${mdx?.frontmatter?.title}",
           "image": [
-            "${mdx?.frontmatter?.thumbnail?.childImageSharp?.gatsbyImageData.images.fallback?.src}"
+            "${mdx?.frontmatter?.thumbnail?.gatsbyImageData?.images.fallback?.src}"
           ],
           "datePublished": "${new Date(mdx?.frontmatter?.publishedAt || 0).toISOString()}",
           "dateModified":  "${new Date(mdx?.frontmatter?.date || 0).toISOString()}",
