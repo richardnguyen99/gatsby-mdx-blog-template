@@ -4,14 +4,11 @@ import { CalendarIcon, TagIcon } from "@primer/octicons-react";
 import { Link } from "gatsby";
 import { buttonVariants } from "./ui/button";
 import { cn } from "@/lib/utils";
+import ImageCard from "./image-card";
 
 type ArticleCardProps = {
   frontmatter:
-    | (Omit<Queries.MdxFrontmatter, "thumbnail"> & {
-        thumbnail: {
-            gatsbyImageData: GatsbyImageProps["image"] | null;
-        } | null;
-      })
+    | Queries.BlogPageQuery["allMdx"]["nodes"][number]["frontmatter"]
     | null;
   fields: {
     timeToRead: {
@@ -33,13 +30,9 @@ const ArticleCard: React.FC<
       )}
       {...rest}
     >
-      <Image
-        image={
-          frontmatter?.thumbnail?.gatsbyImageData as GatsbyImageProps["image"]
-        }
-        alt={frontmatter?.title ?? "Thumbnail"}
-        className="w-full h-60 sm:h-40 sm:object-cover"
-      />
+      <React.Suspense fallback={<div className="w-full h-40 animate-pulse"></div>}>
+        <ImageCard src={frontmatter?.thumbnail?.publicId ?? ""} alt={frontmatter?.thumbnail?.alt ?? ""} />
+      </React.Suspense>
 
       <div className="p-4 flex flex-col flex-grow">
         <h3 className="">

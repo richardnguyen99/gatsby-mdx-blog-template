@@ -209,7 +209,9 @@ export const query = graphql`
           publishedAt
 
           thumbnail {
-            gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
+            publicId
+            alt 
+            cloudName
           }
         }
       }
