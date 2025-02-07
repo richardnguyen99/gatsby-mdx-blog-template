@@ -28,6 +28,7 @@ const config: GatsbyConfig = {
   graphqlTypegen: true,
   plugins: [
     "gatsby-plugin-postcss",
+    "gatsby-plugin-sharp",
     "gatsby-plugin-image",
     "gatsby-plugin-sitemap",
     {
@@ -39,14 +40,7 @@ const config: GatsbyConfig = {
     {
       resolve: "gatsby-plugin-mdx",
       options: {
-        gatsbyRemarkPlugins: [
-          {
-            resolve: "gatsby-remark-images",
-            options: {
-              maxWidth: 1200,
-            },
-          },
-        ],
+        gatsbyRemarkPlugins: [],
       },
     },
     {
@@ -67,18 +61,16 @@ const config: GatsbyConfig = {
           `CloudinaryMedia`,
           `MdxFrontmatterThumbnail`,
           // {
-            // type: "MdxFrontmatterThumbnail",
-            // cloudName: `didyolmw9`,
-            // mapping: {
-              // publicId: "publicId",
-            // },
+          // type: "MdxFrontmatterThumbnail",
+          // cloudName: `didyolmw9`,
+          // mapping: {
+          // publicId: "publicId",
+          // },
           // },
         ],
         defaultTransformations: [`c_fill`, `g_auto`, `q_auto`],
       },
     },
-    "gatsby-plugin-sharp",
-    "gatsby-transformer-sharp",
     {
       resolve: "gatsby-source-filesystem",
       options: {
