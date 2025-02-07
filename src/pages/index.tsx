@@ -1,6 +1,6 @@
 import * as React from "react";
-import { graphql, type HeadFC, type PageProps } from "gatsby";
-import { GatsbyImage, StaticImage } from "gatsby-plugin-image";
+import { type HeadFC } from "gatsby";
+import { StaticImage } from "gatsby-plugin-image";
 import SEO from "@/components/seo";
 
 const IndexPage: React.FC = () => {

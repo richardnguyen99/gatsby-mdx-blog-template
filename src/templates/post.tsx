@@ -64,9 +64,6 @@ export const query = graphql`
         category
         published
         publishedAt
-        thumbnail {
-          gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
-        }
       }
     }
   }

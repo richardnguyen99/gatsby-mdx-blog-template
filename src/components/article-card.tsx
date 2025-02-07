@@ -1,7 +1,7 @@
 import React from "react";
-import { GatsbyImageProps, GatsbyImage as Image } from "gatsby-plugin-image";
 import { CalendarIcon, TagIcon } from "@primer/octicons-react";
 import { Link } from "gatsby";
+
 import { buttonVariants } from "./ui/button";
 import { cn } from "@/lib/utils";
 import ImageCard from "./image-card";
