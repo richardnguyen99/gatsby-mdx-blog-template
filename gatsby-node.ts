@@ -112,9 +112,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       image: OGImage!
     }
   `;
-
-
-
+    
     createTypes(typeDefs);
   };
 

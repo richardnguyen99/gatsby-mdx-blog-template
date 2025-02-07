@@ -9,9 +9,7 @@ type ArticleCardProps = {
   frontmatter:
     | (Omit<Queries.MdxFrontmatter, "thumbnail"> & {
         thumbnail: {
-          childImageSharp: {
             gatsbyImageData: GatsbyImageProps["image"];
-          } | null;
         } | null;
       })
     | null;
@@ -37,8 +35,7 @@ const ArticleCard: React.FC<
     >
       <Image
         image={
-          frontmatter?.thumbnail?.childImageSharp
-            ?.gatsbyImageData as GatsbyImageProps["image"]
+          frontmatter?.thumbnail?.gatsbyImageData as GatsbyImageProps["image"]
         }
         alt={frontmatter?.title ?? "Thumbnail"}
         className="w-full h-60 sm:h-40 sm:object-cover"

@@ -209,13 +209,7 @@ export const query = graphql`
           publishedAt
 
           thumbnail {
-            childImageSharp {
-              gatsbyImageData(
-                layout: CONSTRAINED
-                quality: 100
-                placeholder: BLURRED
-              )
-            }
+            gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
           }
         }
       }
