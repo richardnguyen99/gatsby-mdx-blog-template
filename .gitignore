@@ -3,3 +3,6 @@ node_modules/
 public
 src/gatsby-types.d.ts
 .env
+
+# Local Netlify folder
+.netlify

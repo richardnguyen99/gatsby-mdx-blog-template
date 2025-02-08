@@ -49,36 +49,7 @@ const config: GatsbyConfig = {
         ],
       },
     },
-    {
-      resolve: `gatsby-source-cloudinary`,
-      options: {
-        cloudName: process.env.CLOUDINARY_CLOUD_NAME,
-        apiKey: process.env.CLOUDINARY_API_KEY,
-        apiSecret: process.env.CLOUDINARY_API_SECRET,
-        resourceType: `image`,
-      },
-    },
-    {
-      resolve: `gatsby-transformer-cloudinary`,
-      options: {
-        // Add the `gatsbyImageData` resolver to `CloudinaryMedia`
-        cloudName: process.env.CLOUDINARY_CLOUD_NAME,
-        transformTypes: [
-          `CloudinaryMedia`,
-          `MdxFrontmatterThumbnail`,
-          // {
-            // type: "MdxFrontmatterThumbnail",
-            // cloudName: `didyolmw9`,
-            // mapping: {
-              // publicId: "publicId",
-            // },
-          // },
-        ],
-        defaultTransformations: [`c_fill`, `g_auto`, `q_auto`],
-      },
-    },
     "gatsby-plugin-sharp",
-    "gatsby-transformer-sharp",
     {
       resolve: "gatsby-source-filesystem",
       options: {
