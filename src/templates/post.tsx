@@ -1,6 +1,7 @@
 import React from "react";
 import { MDXProvider } from "@mdx-js/react";
 import { graphql, HeadFC } from "gatsby";
+
 import SEO from "@/components/seo";
 
 const shortCodes = {};
