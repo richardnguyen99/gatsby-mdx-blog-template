@@ -1,6 +1,7 @@
 import React from "react";
 import { MDXProvider } from "@mdx-js/react";
 import { graphql, HeadFC } from "gatsby";
+import { Cloudinary } from "@cloudinary/url-gen";
 
 import SEO from "@/components/seo";
 
@@ -26,7 +27,7 @@ const PostLayout: React.FC<React.PropsWithChildren<PostLayoutData>> = ({
           </div>
         </div>
 
-        <div>
+        <div className="prose prose-slate lg:prose-lg dark:prose-invert pt-12">
           <MDXProvider components={shortCodes}>{children}</MDXProvider>
         </div>
 
@@ -65,40 +66,57 @@ export const query = graphql`
         category
         published
         publishedAt
+
+        thumbnail {
+          publicId
+        }
       }
     }
   }
 `;
 
 export const Head: HeadFC<Queries.PostLayoutQuery> = ({ data }) => {
-  const { mdx }  = data;
+  const { mdx } = data;
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName: process.env.GATSBY_CLOUDINARY_CLOUD_NAME,
+    },
+  });
 
-  return <SEO
-    key={`${mdx?.frontmatter?.slug}`}
-    title={`${mdx?.frontmatter?.title}`}
-    description={`${mdx?.frontmatter?.description}`}
-    keywords={mdx?.frontmatter?.tags as string[]}
-  >
-    <script type="application/ld+json">
-      {
-        `
+  const img = cld.image(mdx?.frontmatter?.thumbnail?.publicId ?? "");
+
+  return (
+    <SEO
+      key={`${mdx?.frontmatter?.slug}`}
+      title={`${mdx?.frontmatter?.title}`}
+      description={`${mdx?.frontmatter?.description}`}
+      keywords={mdx?.frontmatter?.tags as string[]}
+    >
+      <script type="application/ld+json">
+        {`
         {
           "@context": "https://schema.org",
           "@type": "NewsArticle",
           "headline": "${mdx?.frontmatter?.title}",
           "image": [
-            "${mdx?.frontmatter?.thumbnail?.gatsbyImageData?.images.fallback?.src}"
+            "${img.toURL()}"
           ],
-          "datePublished": "${new Date(mdx?.frontmatter?.publishedAt || 0).toISOString()}",
-          "dateModified":  "${new Date(mdx?.frontmatter?.date || 0).toISOString()}",
-          "author": ${JSON.stringify([{
-            "@type": "Person",
-            "name": mdx?.frontmatter?.author,
-            "url": "https://x.com/RichardNgu65749"
-          }])}
+          "datePublished": "${new Date(
+            mdx?.frontmatter?.publishedAt || 0
+          ).toISOString()}",
+          "dateModified":  "${new Date(
+            mdx?.frontmatter?.date || 0
+          ).toISOString()}",
+          "author": ${JSON.stringify([
+            {
+              "@type": "Person",
+              name: mdx?.frontmatter?.author,
+              url: "https://x.com/RichardNgu65749",
+            },
+          ])}
         }
-        `
-      }
-    </script>
-  </SEO>
+        `}
+      </script>
+    </SEO>
+  );
 };
