@@ -30,6 +30,23 @@ const config: GatsbyConfig = {
     "gatsby-plugin-postcss",
     "gatsby-plugin-sitemap",
     {
+      resolve: `gatsby-plugin-google-gtag`,
+      options: {
+        // You can add multiple tracking ids and a pageview event will be fired for all of them.
+        trackingIds: [
+          // It's ok to commit this key to the repo:
+          // https://stackoverflow.com/questions/68088629/should-google-analytics-tracking-id-be-kept-secret-or-can-i-embed-it-into-the-bu
+          `G-RW65TSLLP4`, // Google Analytics / GA
+          // "AW-CONVERSION_ID", // Google Ads / Adwords / AW
+          // "DC-FLOODIGHT_ID", // Marketing Platform advertising products (Display & Video 360, Search Ads 360, and Campaign Manager)
+        ],
+        pluginConfig: {
+          // Puts tracking script in the head tag instead of the body
+          head: true,
+        },
+      }
+    },
+    {
       resolve: "gatsby-plugin-manifest",
       options: {
         icon: "src/images/icon.png",
