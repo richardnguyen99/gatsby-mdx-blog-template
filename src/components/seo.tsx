@@ -32,7 +32,7 @@ const SEO: React.FC<Props> = ({
   const seo = {
     title: title || defaultTitle,
     description: description || defaultDescription,
-    siteUrl: `${siteUrl || defaultSiteUrl}`,
+    siteUrl: `${defaultSiteUrl}${siteUrl || ""}`,
     xUsername: xUsername || defaultXUsername,
     image: {
       src: image?.src || defaultImage?.src,
@@ -46,7 +46,7 @@ const SEO: React.FC<Props> = ({
     <>
       <title key={`${seo.title}`}>{`${seo.title} | ${titleTemplate}`}</title>
       <meta name="description" content={description} />
-      <meta name="image" content={`${seo.siteUrl}${seo.image.src}`} />
+      <meta name="image" content={`${seo.image.src}`} />
       <meta name="keywords" content={keywords.join(",")} />
 
       <meta name="twitter:card" content="summary_large_image" />

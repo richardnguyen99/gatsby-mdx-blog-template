@@ -149,6 +149,7 @@ export const Head: HeadFC = () => (
   <SEO
     key="Blog"
     title="Blog"
+    siteUrl="/blog"
     description="Blog Page of Gatsby MDX Blog Starter"
     keywords={["gatsby", "mdx", "typescript", "blog", "template"]}
   />

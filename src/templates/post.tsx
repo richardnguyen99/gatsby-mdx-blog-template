@@ -71,6 +71,7 @@ export const query = graphql`
 
         thumbnail {
           publicId
+          alt
         }
       }
     }
@@ -93,6 +94,13 @@ export const Head: HeadFC<Queries.PostLayoutQuery> = ({ data }) => {
       title={`${mdx?.frontmatter?.title}`}
       description={`${mdx?.frontmatter?.description}`}
       keywords={mdx?.frontmatter?.tags as string[]}
+      siteUrl={`/blog/${mdx?.frontmatter?.slug}`}
+      image={{
+        src: img.toURL(),
+        width: 1470,
+        height: 960,
+        alt: mdx?.frontmatter?.thumbnail?.alt ?? "",
+      }}
     >
       <script type="application/ld+json">
         {`

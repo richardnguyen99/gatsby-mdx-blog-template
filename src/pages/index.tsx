@@ -32,6 +32,8 @@ export default IndexPage;
 export const Head: HeadFC = () => (
   <SEO
     key="Homepage"
+    title="Home"
+    description="A blog starter template for Gatsby with MDX and TypeScript."
     keywords={["gatsby", "mdx", "typescript", "blog", "template"]}
   />
 );

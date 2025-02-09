@@ -12,11 +12,11 @@ const config: GatsbyConfig = {
   siteMetadata: {
     title: `Home`,
     titleTemplate: `Gatsby MDX Blog Starter`,
-    siteUrl: `https://gatsby-mdx-blog-starter.netlify.app/`,
+    siteUrl: `${process.env.GATSBY_PUBLIC_URL}/`,
     description: `A Gatsby blog template using MDX`,
     xUsername: `@RichardNgu65749`,
     image: {
-      src: `/og-image.png`,
+      src: `${process.env.GATSBY_PUBLIC_URL}/og-image.png`,
       width: 1600,
       height: 836,
       alt: `OG Gatsby MDX Blog Starter Image`,
