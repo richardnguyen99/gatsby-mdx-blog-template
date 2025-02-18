@@ -4,6 +4,7 @@ import { RssIcon, LinkExternalIcon, MoonIcon } from "@primer/octicons-react";
 
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "./ui/button";
+import Search from "./search";
 
 const IconLink: React.FC<
   React.PropsWithChildren<React.AnchorHTMLAttributes<HTMLAnchorElement>>
@@ -54,6 +55,8 @@ const Header: React.FC = () => (
         <NavLink to="/about">about</NavLink>
       </div>
       <div className="flex items-center gap-2">
+        <Search />
+
         <IconLink href="#">
           <RssIcon />
         </IconLink>
