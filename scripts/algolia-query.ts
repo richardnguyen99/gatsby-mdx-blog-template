@@ -47,29 +47,62 @@ query AlgoliaQuery {
   }
 }`;
 
-type Edges = {
-  nodes: {
-    id: string;
-    body: string;
-    frontmatter: {
-      slug: string;
-      title: string;
-      date: string;
-      author: string;
-      description: string;
-      tags: string[];
-      category: string;
-      published: boolean;
-      publishedAt: string;
-      thumbnail: {
-        publicId: string;
-      };
-    };
-  }[];
+type Headings = {
+  url: string;
+  title: string;
+  items: Headings[];
+}
+
+type AlgoliaHeadings = {
+  depth: number;
+  text: string;
+}
+
+type TableOfContents = {
+  items: Headings[];
 };
 
-function extractHeadings(tableOfContents: any): any[] {
-  const headings: any[] = [];
+type Internal = {
+  contentDigest: string;
+}
+
+type Thumbnail = {
+  cloudName: string;
+  alt: string;
+  publicId: string;
+}
+
+type Frontmatter = {
+    slug: string;
+    title: string;
+    date: string;
+    author: string;
+    description: string;
+    tags: string[];
+    category: string;
+    published: boolean;
+    publishedAt: string;
+    thumbnail: Thumbnail;
+}
+
+type Node = {
+  id: string;
+  body: string;
+  tableOfContents: TableOfContents;
+  internal: Internal;
+  frontmatter: Frontmatter;
+};
+
+type Nodes = {
+  nodes: Node[];
+};
+
+type Data = {
+  pages: Nodes;
+};
+
+function extractHeadings(tableOfContents: TableOfContents): any[] {
+  const headings: AlgoliaHeadings[] = [];
   const items = tableOfContents.items;
 
   items.forEach((item: any) => {
@@ -97,7 +130,7 @@ function extractHeadings(tableOfContents: any): any[] {
   return headings;
 }
 
-function pageToAlgoliaRecord(props: any) {
+function pageToAlgoliaRecord(props: Node) {
   const cld = new Cloudinary({
     cloud: {
       cloudName: process.env.GATSBY_CLOUDINARY_CLOUD_NAME,
@@ -120,7 +153,7 @@ function pageToAlgoliaRecord(props: any) {
 const queries = [
   {
     query: pageQuery,
-    transformer: ({ data }: { data: any }) =>
+    transformer: ({ data }: { data: Data }) =>
       data.pages.nodes.map(pageToAlgoliaRecord),
     indexName: process.env.GATSBY_ALGOLIA_INDEX_NAME as string,
   },
