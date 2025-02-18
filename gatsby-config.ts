@@ -1,6 +1,8 @@
 import type { GatsbyConfig } from "gatsby";
 import dotenv from "dotenv";
 
+import algoliaQuery from "./scripts/algolia-query";
+
 dotenv.config({
   path: `.env`,
 });
@@ -44,7 +46,15 @@ const config: GatsbyConfig = {
           // Puts tracking script in the head tag instead of the body
           head: true,
         },
-      }
+      },
+    },
+    {
+      resolve: `gatsby-plugin-algolia`,
+      options: {
+        appId: process.env.GATSBY_ALGOLIA_APP_ID,
+        apiKey: process.env.ALGOLIA_WRITE_KEY,
+        queries: algoliaQuery,
+      },
     },
     {
       resolve: "gatsby-plugin-manifest",
