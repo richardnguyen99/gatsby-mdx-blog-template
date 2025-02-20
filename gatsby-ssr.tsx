@@ -28,7 +28,7 @@ export const onRenderBody: GatsbySSR["onRenderBody"] = ({
     <script
       key="theme-script"
       dangerouslySetInnerHTML={{
-        __html:/*js*/ `
+        __html: UglifyJS.minify(/*js*/ `
 void function () {
   /**
    * Callback fired when window.__theme was set or updated
@@ -80,7 +80,7 @@ void function () {
 
   setTheme(preferredTheme || (darkQuery.matches ? "dark" : "light"))
 }();
-        `
+        `).code,
       }}
     />,
   ]);
