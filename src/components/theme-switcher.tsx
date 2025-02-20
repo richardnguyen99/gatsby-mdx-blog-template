@@ -5,10 +5,8 @@ import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuLabel,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { SunIcon } from "@primer/octicons-react";
@@ -23,7 +21,8 @@ declare global {
 
 function ThemeSwitcher(): JSX.Element | null {
   const [mounted, setMounted] = React.useState(false);
-  const [theme, setTheme] = React.useState<string | null>("system");
+  const [theme, setTheme] = React.useState("system");
+
   const handleThemeChange = React.useCallback((newTheme: string) => {
     window.__setPreferredTheme(newTheme);
   }, []);
@@ -34,6 +33,7 @@ function ThemeSwitcher(): JSX.Element | null {
     };
 
     // Fix hydration error
+    setTheme(window.__theme);
     setMounted(true);
   }, []);
 

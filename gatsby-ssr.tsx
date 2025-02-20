@@ -21,7 +21,6 @@ export const onRenderBody: GatsbySSR["onRenderBody"] = ({
 }) => {
   setHtmlAttributes({
     lang: "en",
-    className: "dark",
     suppressHydrationWarning: true,
   });
 
