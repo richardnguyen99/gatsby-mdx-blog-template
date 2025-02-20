@@ -12,11 +12,11 @@ const IconLink: React.FC<
 > = ({ href, children, ...rest }) => (
   <a
     href={href}
-    className={cn(
-      buttonVariants({ variant: "ghost", size: "icon" }),
-      "text-slate-200",
-      "dark:hover:bg-sky-900"
-    )}
+    className={buttonVariants({
+      variant: "ghost",
+      size: "icon",
+      className: cn("dark:text-slate-200", "dark:hover:bg-sky-900"),
+    })}
     {...rest}
   >
     {children}
@@ -34,12 +34,14 @@ const NavLink: React.FC<GatsbyLinkProps<undefined>> = ({
   <Link
     to={to}
     className={cn(
-      className,
       buttonVariants({
         variant: "link",
-      }),
-      "dark:text-sky-50 dark:hover:text-sky-400",
-      activeClassName
+        className: cn(
+          className,
+          "dark:text-sky-50 dark:hover:text-sky-400",
+          activeClassName
+        ),
+      })
     )}
     {...rest}
   >
@@ -48,7 +50,13 @@ const NavLink: React.FC<GatsbyLinkProps<undefined>> = ({
 );
 
 const Header: React.FC = () => (
-  <div className="sticky top-0 z-50 bg-slate-900 border-b border-slate-800">
+  <div
+    className={cn(
+      "sticky top-0 z-5",
+      "bg-slate-100 dark:bg-slate-900",
+      "border-b border-border dark:border-slate-800"
+    )}
+  >
     <nav className="flex items-center justify-between px-4 py-2 max-w-3xl mx-auto">
       <div className="flex items-center gap-2">
         <NavLink to="/">home</NavLink>

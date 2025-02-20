@@ -1,5 +1,6 @@
 import React, { type JSX } from "react";
 import { LucideMonitor, MoonIcon } from "lucide-react";
+import { SunIcon } from "@primer/octicons-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -9,7 +10,7 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { SunIcon } from "@primer/octicons-react";
+import { cn } from "@/lib/utils";
 
 declare global {
   interface Window {
@@ -38,7 +39,9 @@ function ThemeSwitcher(): JSX.Element | null {
   }, []);
 
   if (!mounted) {
-    return <div className="w-9 h-9 rounded-full animate-pulse dark:bg-slate-800" />
+    return (
+      <div className="w-9 h-9 rounded-full animate-pulse dark:bg-slate-800" />
+    );
   }
 
   return (
@@ -47,7 +50,11 @@ function ThemeSwitcher(): JSX.Element | null {
         <Button
           variant="ghost"
           size="icon"
-          className="text-slate-200 dark:hover:bg-sky-900"
+          className={cn(
+            "cursor-pointer",
+            "dark:text-slate-200",
+            "dark:hover:bg-sky-900"
+          )}
           suppressHydrationWarning
         >
           {theme === "dark" ? (
