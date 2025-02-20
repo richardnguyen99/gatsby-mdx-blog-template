@@ -5,6 +5,7 @@ import { RssIcon, LinkExternalIcon, MoonIcon } from "@primer/octicons-react";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "./ui/button";
 import Search from "./search";
+import ThemeSwitcher from "./theme-switcher";
 
 const IconLink: React.FC<
   React.PropsWithChildren<React.AnchorHTMLAttributes<HTMLAnchorElement>>
@@ -33,7 +34,7 @@ const NavLink: React.FC<GatsbyLinkProps<undefined>> = ({
   <Link
     to={to}
     className={cn(
-    className,
+      className,
       buttonVariants({
         variant: "link",
       }),
@@ -63,15 +64,8 @@ const Header: React.FC = () => (
         <IconLink href="#">
           <LinkExternalIcon />
         </IconLink>
-        <button
-          className={cn(
-            buttonVariants({ variant: "ghost", size: "icon" }),
-            "text-slate-200",
-            "dark:hover:bg-sky-900"
-          )}
-        >
-          <MoonIcon />
-        </button>
+
+        <ThemeSwitcher />
       </div>
     </nav>
   </div>

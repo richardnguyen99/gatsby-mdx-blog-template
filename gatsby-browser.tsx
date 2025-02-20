@@ -1,5 +1,5 @@
 import React from "react";
-import { GatsbyBrowser } from "gatsby";
+import { type GatsbyBrowser } from "gatsby";
 
 import Header from "./src/components/header";
 import Footer from "./src/components/footer";
