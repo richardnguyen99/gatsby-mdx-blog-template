@@ -57,7 +57,12 @@ const Header: React.FC = () => (
       "border-b border-border dark:border-slate-800"
     )}
   >
-    <nav className="flex items-center justify-between px-4 py-2 max-w-3xl mx-auto">
+    <nav
+      className={cn(
+        "flex items-center justify-between",
+        "px-4 py-2 max-w-3xl mx-auto"
+      )}
+    >
       <div className="flex items-center gap-2">
         <NavLink to="/">home</NavLink>
         <NavLink to="/blog">blog</NavLink>
