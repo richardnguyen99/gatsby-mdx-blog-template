@@ -1,6 +1,5 @@
 import React from "react";
 import { type GatsbySSR } from "gatsby";
-import UglifyJS from "uglify-js";
 
 import Header from "./src/components/header";
 import Footer from "./src/components/footer";
@@ -28,7 +27,7 @@ export const onRenderBody: GatsbySSR["onRenderBody"] = ({
     <script
       key="theme-script"
       dangerouslySetInnerHTML={{
-        __html: UglifyJS.minify(/*js*/ `
+        __html: /*js*/ `
 void function () {
   /**
    * Callback fired when window.__theme was set or updated
@@ -80,7 +79,7 @@ void function () {
 
   setTheme(preferredTheme || (darkQuery.matches ? "dark" : "light"))
 }();
-        `).code,
+        `,
       }}
     />,
   ]);
