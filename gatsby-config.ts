@@ -4,6 +4,7 @@ import { type IMdxPluginOptions } from "gatsby-plugin-mdx/dist/plugin-options";
 
 import algoliaQuery from "./scripts/algolia-query";
 import rehypePlugins from "./src/lib/rehype-plugins";
+import remarkPlugins from "./src/lib/remark-plugins"; 
 
 dotenv.config({
   path: `.env`,
@@ -67,9 +68,9 @@ const config: GatsbyConfig = {
     {
       resolve: "gatsby-plugin-mdx",
       options: {
-        extensions: [".mdx"],
+        extensions: [".mdx",],
         mdxOptions: {
-          remarkPlugins: [],
+          remarkPlugins,
           rehypePlugins,
           remarkRehypeOptions: {},
         },
