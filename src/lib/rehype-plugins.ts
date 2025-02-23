@@ -1,5 +1,6 @@
 import { type IMdxPluginOptions } from "gatsby-plugin-mdx/dist/plugin-options";
 import rehypeSlug, { type Options as RehypeSlugOptions } from "rehype-slug";
+import rehypeKatex, {type Options as RehypeKatexOptions } from "rehype-katex";
 import rehypeAutolinkHeadings, {
   type Options as RehypeAutolinkOptions,
 } from "rehype-autolink-headings";
@@ -35,6 +36,15 @@ const rehypePlugins = [
       },
     } satisfies RehypeAutolinkOptions,
   ],
+
+  // Render math and scientific annotations in HTML
+  [
+    rehypeKatex,
+    {
+      strict: true,
+    } satisfies RehypeKatexOptions,
+  ],
+
 ] satisfies NonNullable<IMdxPluginOptions["mdxOptions"]>["rehypePlugins"];
 
 export default rehypePlugins;
