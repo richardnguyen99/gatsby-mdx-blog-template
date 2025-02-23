@@ -5,9 +5,8 @@ import { Cloudinary } from "@cloudinary/url-gen";
 
 import SEO from "@/components/seo";
 import ImageCard from "@/components/image-card";
+import shortCodes from "@/lib/short-codes";
 import { cn } from "@/lib/utils";
-
-const shortCodes = {};
 
 type PostLayoutData = {
   data: Queries.PostLayoutQuery;
@@ -70,7 +69,12 @@ function PostLayout({
           </figure>
         </div>
 
-        <div className="prose prose-slate lg:prose-lg dark:prose-invert pt-12">
+        <div
+          className={cn(
+            "prose prose-slate lg:prose-lg dark:prose-invert pt-12",
+            "prose-th:py-4 prose-th:text-accent-foreground prose-th:font-bold"
+          )}
+        >
           <MDXProvider components={shortCodes}>{children}</MDXProvider>
         </div>
 
