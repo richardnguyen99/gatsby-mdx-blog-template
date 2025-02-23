@@ -72,7 +72,8 @@ function PostLayout({
         <div
           className={cn(
             "prose prose-slate lg:prose-lg dark:prose-invert pt-12",
-            "prose-th:py-4 prose-th:text-accent-foreground prose-th:font-bold"
+            "prose-th:py-4 prose-th:text-accent-foreground prose-th:font-bold",
+            "prose-headings:scroll-smooth prose-headings:scroll-mt-16"
           )}
         >
           <MDXProvider components={shortCodes}>{children}</MDXProvider>
