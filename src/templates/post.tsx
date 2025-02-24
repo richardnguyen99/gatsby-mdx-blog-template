@@ -71,9 +71,17 @@ function PostLayout({
 
         <div
           className={cn(
+            // general prose styling
             "prose prose-slate lg:prose-lg dark:prose-invert pt-12",
+
+            // tables
             "prose-th:py-4 prose-th:text-accent-foreground prose-th:font-bold",
-            "prose-headings:scroll-smooth prose-headings:scroll-mt-16"
+
+            // headings
+            "prose-headings:scroll-smooth prose-headings:scroll-mt-16",
+
+            // pre code blocks
+            "prose-pre:bg-[var(--shiki-light-bg)] dark:prose-pre:bg-[var(--shiki-dark-bg)]"
           )}
         >
           <MDXProvider components={shortCodes}>{children}</MDXProvider>

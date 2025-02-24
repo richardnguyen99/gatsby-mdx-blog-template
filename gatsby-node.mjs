@@ -1,10 +1,12 @@
-import { GatsbyNode } from "gatsby";
 import * as path from "path";
 import readingTime from "reading-time";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
 
-export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] = ({
-  actions,
-}) => {
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+/** @typedef {import("gatsby").GatsbyNode["onCreateWebpackConfig"]} */
+export const onCreateWebpackConfig = ({ actions }) => {
   actions.setWebpackConfig({
     resolve: {
       alias: {
@@ -17,7 +19,8 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] = ({
   });
 };
 
-export const onCreateNode: GatsbyNode["onCreateNode"] = async ({
+/** @typedef {import("gatsby").GatsbyNode["onCreateNode"]} */
+export const onCreateNode = async ({
   node,
   actions,
   reporter,
@@ -28,7 +31,7 @@ export const onCreateNode: GatsbyNode["onCreateNode"] = async ({
   const { createNodeField, createNode, deleteNode } = actions;
 
   if (node.internal.type === "Mdx") {
-    const frontmatter = node.frontmatter as Record<string, string>;
+    const frontmatter = node.frontmatter;
     const { category } = frontmatter;
 
     const nodeId = createNodeId(`${category} >>> Category`);
@@ -45,21 +48,21 @@ export const onCreateNode: GatsbyNode["onCreateNode"] = async ({
           type: "Category",
           contentDigest: createContentDigest({ category }),
         },
-      }
+      };
 
       createNode(newCategoryNode);
     } else {
       const newCategoryNode = {
         id: createNodeId(`${category} >>> Category`),
         name: category,
-        count: (categoryNode.count as number) + 1,
+        count: categoryNode.count + 1,
         parent: node.id,
         children: [],
         internal: {
           type: "Category",
           contentDigest: createContentDigest({ category }),
         },
-      }
+      };
 
       deleteNode(categoryNode);
       createNode(newCategoryNode);
@@ -69,23 +72,32 @@ export const onCreateNode: GatsbyNode["onCreateNode"] = async ({
       createNodeField({
         name: "timeToRead",
         node,
-        value: readingTime(node.body as string),
+        value: readingTime(node.body),
       });
     } catch (e) {
       reporter.panicOnBuild(
-        "Error creating node field (Node ID: " +
-          node.id +
-          "):\n" +
-          (e as Error).message
+        "Error creating node field (Node ID: " + node.id + "):\n" + e.message
       );
     }
   }
 };
 
-export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] =
-  ({ actions }) => {
-    const { createTypes } = actions;
-    const typeDefs = `#graphql
+/** @typedef {import("gatsby").GatsbyNode["createSchemaCustomization"]} */
+export const createSchemaCustomization = (
+  {
+    getNode,
+    getNodesByType,
+    pathPrefix,
+    reporter,
+    cache,
+    actions,
+    schema,
+    store,
+  },
+  pluginOptions
+) => {
+  const { createTypes } = actions;
+  const typeDefs = `#graphql
     type Category implements Node {
       id: ID!
       name: String!
@@ -112,30 +124,15 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       image: OGImage!
     }
   `;
-    
-    createTypes(typeDefs);
-  };
 
-export const createPages: GatsbyNode["createPages"] = async ({
-  graphql,
-  actions,
-  reporter,
-}) => {
+  createTypes(typeDefs);
+};
+
+/** @typedef {GatsbyNode["createPages"]} */
+export const createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions;
 
-  const result = await graphql<{
-    allMdx: {
-      nodes: {
-        id: string;
-        frontmatter: {
-          slug: string;
-        };
-        internal: {
-          contentFilePath: string;
-        };
-      }[];
-    };
-  }>(`
+  const result = await graphql(`
     #graphql
     query MdxNode {
       allMdx {
