@@ -9,10 +9,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import Callout from "@/components/callout";
 
 const shortCodes: React.ComponentPropsWithRef<
   typeof MDXProvider
 >["components"] = {
+  // Overriding the default components
   table: (props) => <Table {...props} />,
 
   thead: (props) => <TableHeader {...props} />,
@@ -24,6 +26,9 @@ const shortCodes: React.ComponentPropsWithRef<
   tbody: (props) => <TableBody {...props} />,
 
   td: (props) => <TableCell {...props} />,
+
+  // Passing any additional components to MDX
+  Callout,
 };
 
 export default shortCodes;
